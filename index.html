@@ -41,9 +41,14 @@ form.addEventListener('submit',async(event)=>{
   if(bytes.length<48||new TextDecoder().decode(bytes.slice(0,4))!=='WGL2')throw new Error('Τα αρχεία δεν είναι έγκυρα.');
   const salt=bytes.slice(4,20),iv=bytes.slice(20,32),ciphertext=bytes.slice(32);
   const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(pwd.value),'PBKDF2',false,['deriveKey']);
-  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['decrypt']);
+  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
   let result;try{result=await crypto.subtle.decrypt({name:'AES-GCM',iv,additionalData:new TextEncoder().encode('workguide-v2-locked')},key,ciphertext);}catch(e){throw new Error('Λάθος κωδικός. Δοκίμασε ξανά.');}
-  pwd.value='';const html=new TextDecoder().decode(result);
+  pwd.value='';
+  // Retain the active, non-extractable CryptoKey only in memory for private on-device procedures.
+  window.__wgProcedureKey=key;
+  const plainHtml=new TextDecoder().decode(result);
+  const addon='<link rel="stylesheet" href="./procedures.css"><script src="./procedures.js"><'+'/script>';
+  const html=plainHtml.replace(/<\/body>/i,addon+'</body>');
   document.open();document.write(html);document.close();
  }catch(e){msg.textContent=e?.message||'Δεν ήταν δυνατή η σύνδεση.';btn.disabled=false;btn.textContent='🔒 Ξεκλείδωμα εφαρμογής';pwd.select()}
 });
