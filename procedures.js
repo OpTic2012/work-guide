@@ -55,12 +55,12 @@
   function customPage(body){
     status.className='status';main.innerHTML=body;updateNav();main.scrollTop=0;
   }
-  function back(label){return `<div class="head"><button class="back" onclick="go('process')" aria-label="Πίσω στις διαδικασίες">${ico('arrow-left',22)}</button><strong>${safe(label)}</strong></div>`}
+  function back(label){return `<div class="head wg-photo-head"><button class="back" onclick="go('process')" aria-label="Πίσω στις διαδικασίες">${ico('arrow-left',22)}</button><strong>${safe(label)}</strong></div>`}
   function renderList(){
-    let body=head('Διαδικασίες')+`<div class="screenContent"><div class="wg-heading"><div><h2 class="detailTitle" style="margin-top:0">Οι διαδικασίες μου</h2><p class="detailSub">Δημιούργησε οδηγίες με τα δικά σου βήματα.</p></div></div>
-    <button class="wg-new" onclick="wgNewProcedure()">${ico('plus',19)} + Νέα διαδικασία</button>
+    let body=head('Διαδικασίες')+`<div class="screenContent wg-list-screen">
+    <button class="wg-new" onclick="wgNewProcedure()">${ico('plus',19)} Νέα διαδικασία</button>
     ${loadError?`<div class="wg-private" role="alert">${safe(loadError)}<p>Αν άλλαξες κωδικό, παλιές τοπικές διαδικασίες ενδέχεται να μην ανοίγουν. Μην καθαρίσεις τα δεδομένα πριν κρατήσεις αντίγραφο.</p></div>`:''}
-    ${!isReady?'<div class="empty">Φόρτωση προσωπικών διαδικασιών…</div>':(procedures.length?`<div class="wg-count">ΟΙ ΔΙΚΕΣ ΜΟΥ · ${procedures.length}</div>${procedures.map(p=>`<button class="entry" onclick="wgOpenProcedure('${safe(p.id)}')"><span class="sym">${ico('clipboard',24)}</span><span><div class="enTitle">${safe(p.title)}</div><div class="enDesc">${p.steps.length} ${p.steps.length===1?'βήμα':'βήματα'}${p.description?' · '+safe(p.description):''}</div></span><span class="chev">${ico('chevron-right',18)}</span></button>`).join('')}`:'<div class="empty" style="padding:15px 0 4px">Δεν έχεις προσθέσει ακόμη δικές σου διαδικασίες.</div>')}
+    ${!isReady?'<div class="empty">Φόρτωση προσωπικών διαδικασιών…</div>':(procedures.length?`<div class="wg-count">ΟΙ ΔΙΑΔΙΚΑΣΙΕΣ ΜΟΥ · ${procedures.length}</div>${procedures.map(p=>`<button class="entry" onclick="wgOpenProcedure('${safe(p.id)}')"><span class="sym">${ico('clipboard',24)}</span><span><div class="enTitle">${safe(p.title)}</div><div class="enDesc">${p.steps.length} ${p.steps.length===1?'βήμα':'βήματα'}${p.description?' · '+safe(p.description):''}</div></span><span class="chev">${ico('chevron-right',18)}</span></button>`).join('')}`:'<div class="empty" style="padding:15px 0 4px">Δεν έχεις προσθέσει ακόμη δικές σου διαδικασίες.</div>')}
     <div class="wg-count">ΕΝΔΕΙΚΤΙΚΗ ΔΙΑΔΙΚΑΣΙΑ</div>
     ${miniRow('clipboard','Νέα Παραγγελία','4 βήματα · Παράδειγμα διαδικασίας','detail')}
     <div class="wg-private">${ico('lock',18)} Οι δικές σου διαδικασίες αποθηκεύονται κρυπτογραφημένες σε αυτή τη συσκευή. Δεν ανεβαίνουν στο GitHub και δεν συγχρονίζονται αυτόματα.</div>
@@ -70,9 +70,8 @@
   }
   function renderView(){
     const p=procedures.find(x=>x.id===selectedId);if(!p){page='process';render();return;}
-    customPage(back('Διαδικασία')+`<div class="screenContent"><div class="leadIcon">${ico('clipboard',36)}</div><h2 class="detailTitle">${safe(p.title)}</h2>
-    ${p.description?`<p class="detailSub">${safe(p.description)}</p>`:'<p class="detailSub">Προσωπική διαδικασία</p>'}
-    ${p.steps.map((s,i)=>`<div class="step"><div class="number">${i+1}</div><div><strong>Βήμα ${i+1}</strong><p style="white-space:pre-wrap;overflow-wrap:anywhere">${safe(s)}</p></div></div>`).join('')}
+    customPage(back(p.title)+`<div class="screenContent wg-detail-screen"><div class="wg-description-banner">${safe(p.description||'Προσωπική διαδικασία')}</div><div class="wg-sectionlabel">ΒΗΜΑΤΑ ΔΙΑΔΙΚΑΣΙΑΣ</div>
+    ${p.steps.map((s,i)=>`<div class="step"><div class="number">${i+1}</div><div class="wg-step-copy" style="white-space:pre-wrap;overflow-wrap:anywhere">${safe(s)}</div></div>`).join('')}
     <div class="wg-detailactions"><button class="wg-save" onclick="wgEditProcedure('${safe(p.id)}')">${ico('edit',17)} Επεξεργασία</button><button class="wg-secondary" onclick="wgDeleteProcedure('${safe(p.id)}')">${ico('trash',17)} Διαγραφή</button></div>
     <button class="wg-secondary" style="margin-top:14px;width:100%" onclick="go('process')">Επιστροφή στις διαδικασίες</button>
     </div>`);
