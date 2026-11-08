@@ -1,6 +1,6 @@
 /* Work Guide v6. Versioned new assets; existing encrypted records and device keys are never touched. */
-const CACHE='workguide-ui-v6-3-visible-20261108';
-const ASSETS=['./','./index.html','./content.enc','./wg-theme-v6.css','./wg-theme-v6.3.css','./wg-app-v6.3.js','./wg-secure-store.js','./lucide.min.js','./ui-settings.json','./designer.html','./wg-designer.js','./backup.html','./wg-backup.js','./manifest.webmanifest','./icons/apple-touch-icon.png','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./icons/favicon-32.png'];
+const CACHE='workguide-ui-v6-4-search-20261108';
+const ASSETS=['./','./index.html','./content.enc','./wg-theme-v6.css','./wg-theme-v6.4.css','./wg-app-v6.4.js','./wg-secure-store.js','./lucide.min.js','./ui-settings.json','./designer.html','./wg-designer.js','./backup.html','./wg-backup.js','./manifest.webmanifest','./icons/apple-touch-icon.png','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./icons/favicon-32.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS.map(path=>new Request(new URL(path,self.registration.scope),{cache:'reload'})))).then(()=>self.skipWaiting())));
 // Retain the previous app cache for rollback. IndexedDB and localStorage are not cache storage.
 self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
@@ -18,6 +18,7 @@ self.addEventListener('fetch',event=>{
   return fetch(event.request,{cache:'no-store'});
  })());
 });
+
 
 
 
