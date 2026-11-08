@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Work Guide Designer</title><link rel="stylesheet" href="./wg-theme-v6.css"><script defer src="./lucide.min.js"></script><script defer src="./wg-designer.js"></script></head><body style="margin:0"><div id="wg-designer" lang="el">
+
+<header class="topbar">
+  <div class="brand"><div class="brand-mark"><span id="topIcon"></span></div><div><div class="brand-title">Work Guide <span style="color:#9b8cb9;font-weight:550">/ Προεπισκόπηση</span></div><small>Η εμφάνιση της εφαρμογής σου, στα χέρια σου</small></div></div>
+  <div class="top-actions"><button type="button" class="wg-button primary" id="designerToggle">Προβολή εφαρμογής</button><span class="pill">Προσχέδιο 01</span>
+   <button type="button" class="wg-button" id="resetBtn">Επαναφορά</button>
+   <button type="button" class="wg-button" id="importBtn"><span id="uploadIcon"></span> Φόρτωση JSON</button>
+   <button type="button" class="wg-button soft" id="saveBtn"><span id="saveIcon"></span> Αποθήκευση</button>
+   <button type="button" class="wg-button primary" id="exportBtn"><span id="downloadIcon"></span> Εξαγωγή JSON</button>
+  </div>
+</header>
+<main class="workspace">
+ <aside class="sidebar" aria-label="Εργαλεία σχεδίασης">
+  <div class="side-header"><div class="eyebrow">Σχεδίαση εφαρμογής</div><h1>Άλλαξε ό,τι θέλεις</h1><p>Κάθε αλλαγή εμφανίζεται αμέσως στις τρεις οθόνες. Στη δοκιμή πλοηγείσαι στην εφαρμογή. Απενεργοποίησέ τη για επιλογή στοιχείων προς σχεδίαση.</p>
+   <div class="tabs" id="tabs" role="tablist" aria-label="Ενότητες επεξεργασίας"></div>
+  </div>
+  <div class="side-scroll" id="editor"></div>
+ </aside>
+ <section class="preview-panel" aria-label="Προεπισκόπηση iPhone">
+  <div class="preview-top"><div><div class="eyebrow"><span class="live-dot"></span> LIVE PREVIEW</div><h2>Έτσι θα φαίνεται στο iPhone</h2><p>Πάτησε κάρτες, άνοιξε διαδικασίες, δοκίμασε αλλαγές.</p></div><button class="wg-button soft" id="compareBtn">Σύγκριση 3 οθονών</button></div>
+  <div class="preview-switch"><button class="wg-button" data-screen="home">Αρχική</button><button class="wg-button" data-screen="procedures">Διαδικασίες</button><button class="wg-button" data-screen="detail">Βήματα</button><button class="wg-button" data-screen="policies">Άδειες &amp; Bonus</button><label><input type="checkbox" id="testMode" checked> Δοκιμή πλοήγησης</label></div><div class="phone-stage" id="stage"></div>
+  <div class="note-banner"><b>Δοκιμαστικά δεδομένα μόνο.</b> Δεν συνδέεται με τις αποθηκευμένες διαδικασίες του iPhone.<br><b>Πώς δουλεύει:</b> σχεδιάζεις εδώ, πατάς <b>Εξαγωγή JSON</b> και μου ανεβάζεις το αρχείο στο ChatGPT για να ετοιμάσω το update ZIP. <b>Δεν αλλάζει αυτόματα</b> η εφαρμογή στο GitHub.</div>
+ </section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<input id="fileInput" type="file" accept=".json,application/json" hidden>
+
+</div></body></html>

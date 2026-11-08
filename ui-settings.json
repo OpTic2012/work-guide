@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "app": {
+    "title": "Work Guide",
+    "subtitle": "Οδηγός Εργασίας",
+    "welcome": "Καλωσήρθες! 👋",
+    "intro": "Ο πλήρης οδηγός για τη δουλειά σου, πάντα μαζί σου.",
+    "search": "Αναζήτηση (π.χ. διαδικασία, πολιτική...)",
+    "purple": "#642bb4",
+    "purpleLight": "#a052ed",
+    "roundness": 18,
+    "gap": 12,
+    "cardHeight": 128
+  },
+  "cards": [
+    {
+      "id": "procedures",
+      "title": "Διαδικασίες",
+      "subtitle": "Βήμα-βήμα οδηγίες",
+      "icon": "book",
+      "bg": "#dce7ff",
+      "fg": "#0861ff"
+    },
+    {
+      "id": "policies",
+      "title": "Αδειες & Bonus",
+      "subtitle": "",
+      "icon": "shield",
+      "bg": "#eddcfc",
+      "fg": "#7217d4"
+    },
+    {
+      "id": "team",
+      "title": "Ομάδα",
+      "subtitle": "Επαφές & ρόλοι",
+      "icon": "users",
+      "bg": "#dff9e9",
+      "fg": "#14b629"
+    },
+    {
+      "id": "faq",
+      "title": "Συχνές Ερωτήσεις",
+      "subtitle": "Γρήγορες απαντήσεις",
+      "icon": "help",
+      "bg": "#fff0df",
+      "fg": "#ff7b00"
+    },
+    {
+      "id": "tools",
+      "title": "Χρήσιμα Εργαλεία",
+      "subtitle": "Σύνδεσμοι & εφαρμογές",
+      "icon": "tools",
+      "bg": "#e3eeff",
+      "fg": "#0b68d2"
+    },
+    {
+      "id": "announcements",
+      "title": "Ανακοινώσεις",
+      "subtitle": "Νέα & ενημερώσεις",
+      "icon": "megaphone",
+      "bg": "#ffe5f1",
+      "fg": "#d72871"
+    }
+  ],
+  "procedureUi": {
+    "buttonColor": "#651bb9",
+    "buttonLight": "#ac4bfa",
+    "title": "Διαδικασίες",
+    "newLabel": "Νέα διαδικασία",
+    "listLabel": "ΟΙ ΔΙΑΔΙΚΑΣΙΕΣ ΜΟΥ",
+    "layout": "list",
+    "showAdd": true,
+    "showCount": true
+  },
+  "detailUi": {
+    "stepsLabel": "ΒΗΜΑΤΑ ΔΙΑΔΙΚΑΣΙΑΣ",
+    "bigSteps": false,
+    "showEdit": true
+  }
+}

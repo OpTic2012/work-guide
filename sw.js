@@ -1,18 +1,20 @@
-/* Offline Work Guide — only encrypted content is cached */
-const CACHE='workguide-base-ui-v5-20261108';
-const ASSETS=['./','./index.html','./content.enc','./procedures.js','./procedures.css','./wg-photo-ui.css','./wg-photo-ui.js','./manifest.webmanifest','./icons/apple-touch-icon.png','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./icons/favicon-32.png'];
-self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+/* Work Guide v6. Versioned new assets; existing encrypted records and device keys are never touched. */
+const CACHE='workguide-ui-v6-20261108';
+const ASSETS=['./','./index.html','./content.enc','./wg-theme-v6.css','./wg-app-v6.js','./wg-secure-store.js','./lucide.min.js','./ui-settings.json','./designer.html','./wg-designer.js','./backup.html','./wg-backup.js','./manifest.webmanifest','./icons/apple-touch-icon.png','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./icons/favicon-32.png'];
+self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())));
+// Retain the previous app cache for rollback. IndexedDB and localStorage are not cache storage.
+self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
 self.addEventListener('fetch',event=>{
  if(event.request.method!=='GET')return;
- const u=new URL(event.request.url);if(u.origin!==self.location.origin)return;
- if(event.request.mode==='navigate'){
-  event.respondWith(fetch(event.request).then(response=>{if(response.ok){const copy=response.clone();caches.open(CACHE).then(c=>c.put('./index.html',copy));}return response}).catch(()=>caches.match('./index.html')));
-  return;
- }
- if(u.pathname.endsWith('/content.enc')){
-  event.respondWith(fetch(event.request).then(res=>{if(res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put('./content.enc',copy));}return res}).catch(()=>caches.match('./content.enc')));
-  return;
- }
- event.respondWith(caches.match(event.request,{ignoreSearch:true}).then(c=>c||fetch(event.request)));
+ const url=new URL(event.request.url),scope=new URL(self.registration.scope);
+ if(url.origin!==scope.origin||!url.pathname.startsWith(scope.pathname))return;
+ event.respondWith((async()=>{
+  const cache=await caches.open(CACHE);
+  if(event.request.mode==='navigate'||url.pathname.endsWith('/content.enc')){
+   try{const response=await fetch(event.request);if(!response.ok)throw Error('Network response unavailable');await cache.put(event.request,response.clone());return response}
+   catch(error){const cached=await cache.match(event.request,{ignoreSearch:true});if(cached)return cached;if(event.request.mode==='navigate'){const relative=url.pathname.slice(scope.pathname.length);return await cache.match('./'+(relative||'index.html'))||await cache.match('./index.html')}throw error}
+  }
+  const cached=await cache.match(event.request,{ignoreSearch:true});if(cached)return cached;
+  return fetch(event.request);
+ })());
 });
