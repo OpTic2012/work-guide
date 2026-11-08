@@ -16,7 +16,7 @@
 :root{color-scheme:light;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#eff1ff;color:#192044}body{min-height:100dvh;display:grid;place-items:center;padding:max(22px,env(safe-area-inset-top)) 18px max(22px,env(safe-area-inset-bottom))}
 .shell{width:min(100%,415px);min-height:580px;border-radius:32px;background:#fff;overflow:hidden;box-shadow:0 16px 58px #4e468d2a;display:flex;flex-direction:column}
-.head{background:linear-gradient(135deg,#557dea 0%,#6e5ce9 68%,#8655df 100%);color:#fff;padding:40px 30px 47px;position:relative;isolation:isolate;overflow:hidden}
+.head{background:linear-gradient(135deg,#9e52e6 0%,#813acc 58%,#6030aa 100%);color:#fff;padding:40px 30px 47px;position:relative;isolation:isolate;overflow:hidden}
 .head:after{content:"";position:absolute;z-index:-1;width:290px;height:220px;border-radius:50%;background:#ffffff17;right:-110px;bottom:-140px}
 .brand{display:flex;align-items:center;gap:14px}.brand-icon{height:62px;width:62px;display:grid;place-items:center;border-radius:18px;background:#ffffff36;border:1px solid #ffffff48;box-shadow:0 7px 18px #19117f20}.brand-icon svg{height:39px;width:39px;stroke:#fff}.brand b{font-size:27px;letter-spacing:-.8px}.brand span{font-size:13px;opacity:.88;display:block;margin-top:3px}
 h1{font-size:28px;letter-spacing:-1px;margin:34px 0 8px}.head p{font-size:14px;line-height:1.55;opacity:.95;margin:0}
@@ -72,10 +72,10 @@ function openApp(html,key){
  // The old edition forcibly locked on backgrounding. Remove only that obsolete behavior.
  html=html.replace(/<style id="wg-relock-style">[\s\S]*?<\/script>/,'');
  // Load the original procedure editor and the updated visual layer AFTER decrypting.
- const extras='<link rel="stylesheet" href="./procedures.css?v=4">'+
- '<link rel="stylesheet" href="./wg-photo-ui.css?v=4">'+
- '<script src="./procedures.js?v=4"><'+'/script>'+
- '<script src="./wg-photo-ui.js?v=4"><'+'/script>';
+ const extras='<link rel="stylesheet" href="./procedures.css?v=5">'+
+ '<link rel="stylesheet" href="./wg-photo-ui.css?v=5">'+
+ '<script src="./procedures.js?v=5"><'+'/script>'+
+ '<script src="./wg-photo-ui.js?v=5"><'+'/script>';
  const composed=html.replace(/<\/body>/i,extras+'</body>');
  window.__wgProcedureKey=key;
  pwd.value='';

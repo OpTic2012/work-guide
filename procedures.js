@@ -60,9 +60,10 @@
     let body=head('Διαδικασίες')+`<div class="screenContent wg-list-screen">
     <button class="wg-new" onclick="wgNewProcedure()">${ico('plus',19)} Νέα διαδικασία</button>
     ${loadError?`<div class="wg-private" role="alert">${safe(loadError)}<p>Αν άλλαξες κωδικό, παλιές τοπικές διαδικασίες ενδέχεται να μην ανοίγουν. Μην καθαρίσεις τα δεδομένα πριν κρατήσεις αντίγραφο.</p></div>`:''}
-    ${!isReady?'<div class="empty">Φόρτωση προσωπικών διαδικασιών…</div>':(procedures.length?`<div class="wg-count">ΟΙ ΔΙΑΔΙΚΑΣΙΕΣ ΜΟΥ · ${procedures.length}</div>${procedures.map(p=>`<button class="entry" onclick="wgOpenProcedure('${safe(p.id)}')"><span class="sym">${ico('clipboard',24)}</span><span><div class="enTitle">${safe(p.title)}</div><div class="enDesc">${p.steps.length} ${p.steps.length===1?'βήμα':'βήματα'}${p.description?' · '+safe(p.description):''}</div></span><span class="chev">${ico('chevron-right',18)}</span></button>`).join('')}`:'<div class="empty" style="padding:15px 0 4px">Δεν έχεις προσθέσει ακόμη δικές σου διαδικασίες.</div>')}
-    <div class="wg-count">ΕΝΔΕΙΚΤΙΚΗ ΔΙΑΔΙΚΑΣΙΑ</div>
-    ${miniRow('clipboard','Νέα Παραγγελία','4 βήματα · Παράδειγμα διαδικασίας','detail')}
+    <div class="wg-count">ΟΙ ΔΙΑΔΙΚΑΣΙΕΣ ΜΟΥ</div>
+    ${!isReady?'<div class="empty">Φόρτωση προσωπικών διαδικασιών…</div>':procedures.map(p=>`<button class="entry" onclick="wgOpenProcedure('${safe(p.id)}')"><span class="sym">${ico('clipboard',24)}</span><span><div class="enTitle">${safe(p.title)}</div><div class="enDesc">${p.steps.length} ${p.steps.length===1?'βήμα':'βήματα'}</div></span><span class="chev">${ico('chevron-right',18)}</span></button>`).join('')}
+    ${miniRow('clipboard','Νέα παραγγελία','4 βήματα · Παράδειγμα','detail')}
+    <button class="entry" onclick="wgExampleCheck()"><span class="sym">${ico('clipboard',24)}</span><span><div class="enTitle">Έλεγχος εργασίας</div><div class="enDesc">3 βήματα · Παράδειγμα</div></span><span class="chev">${ico('chevron-right',18)}</span></button>
     <div class="wg-private">${ico('lock',18)} Οι δικές σου διαδικασίες αποθηκεύονται κρυπτογραφημένες σε αυτή τη συσκευή. Δεν ανεβαίνουν στο GitHub και δεν συγχρονίζονται αυτόματα.</div>
     <p class="wg-tinyhint">Αν διαγράψεις τα δεδομένα του Safari ή την εφαρμογή, οι καταχωρίσεις μπορεί να χαθούν. Πριν αλλάξεις κωδικό, κράτησε αντίγραφο των διαδικασιών σου.</p>
     </div>`;
@@ -75,6 +76,10 @@
     <div class="wg-detailactions"><button class="wg-save" onclick="wgEditProcedure('${safe(p.id)}')">${ico('edit',17)} Επεξεργασία</button><button class="wg-secondary" onclick="wgDeleteProcedure('${safe(p.id)}')">${ico('trash',17)} Διαγραφή</button></div>
     <button class="wg-secondary" style="margin-top:14px;width:100%" onclick="go('process')">Επιστροφή στις διαδικασίες</button>
     </div>`);
+  }
+  function renderExampleCheck(){
+    const example=['Έλεγξε τις εκκρεμότητες της ημέρας.','Επιβεβαίωσε ότι τα εργαλεία εργασίας λειτουργούν.','Κατέγραψε όσα χρειάζονται παρακολούθηση.'];
+    customPage(back('Έλεγχος εργασίας')+`<div class="screenContent wg-detail-screen"><div class="wg-description-banner">Ενδεικτικά βήματα ελέγχου εργασίας.</div><div class="wg-sectionlabel">ΒΗΜΑΤΑ ΔΙΑΔΙΚΑΣΙΑΣ</div>${example.map((s,i)=>`<div class="step"><div class="number">${i+1}</div><div class="wg-step-copy">${safe(s)}</div></div>`).join('')}<p class="wg-tinyhint">Παράδειγμα για την εμφάνιση. Χρησιμοποίησε το «Νέα διαδικασία» για να γράψεις τις δικές σου οδηγίες.</p></div>`);
   }
   function renderEditor(){
     if(!draft){page='process';render();return;}
@@ -97,6 +102,7 @@
     if(page==='process'){renderList();return;}
     if(page==='wg-procedure'){renderView();return;}
     if(page==='wg-procedure-edit'){renderEditor();return;}
+    if(page==='wg-example-check'){renderExampleCheck();return;}
     oldRender();
   };
   searchResults=function(){
@@ -107,6 +113,7 @@
     const html=personal.map(p=>`<button class="entry" onclick="wgOpenProcedure('${safe(p.id)}')"><span class="sym">${ico('clipboard',24)}</span><span><div class="enTitle">${safe(p.title)}</div><div class="enDesc">${p.steps.length} βήματα · Προσωπική διαδικασία</div></span><span class="chev">${ico('chevron-right',18)}</span></button>`).join('');
     return existing.includes('Δεν βρέθηκαν αποτελέσματα')?html:html+existing;
   };
+  window.wgExampleCheck=()=>{page='wg-example-check';render();};
   window.wgNewProcedure=()=>{draft={id:null,title:'',description:'',steps:['']};page='wg-procedure-edit';render();};
   window.wgOpenProcedure=id=>{selectedId=id;page='wg-procedure';render();};
   window.wgEditProcedure=id=>{const p=procedures.find(x=>x.id===id);if(!p)return;draft=JSON.parse(JSON.stringify(p));page='wg-procedure-edit';render();};
