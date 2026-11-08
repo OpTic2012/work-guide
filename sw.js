@@ -1,5 +1,5 @@
 /* Work Guide v6. Versioned new assets; existing encrypted records and device keys are never touched. */
-const CACHE='workguide-ui-v6-1-20261108';
+const CACHE='workguide-ui-v6-1-versionlabel-20261108';
 const ASSETS=['./','./index.html','./content.enc','./wg-theme-v6.css','./wg-app-v6.js','./wg-secure-store.js','./lucide.min.js','./ui-settings.json','./designer.html','./wg-designer.js','./backup.html','./wg-backup.js','./manifest.webmanifest','./icons/apple-touch-icon.png','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png','./icons/favicon-32.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())));
 // Retain the previous app cache for rollback. IndexedDB and localStorage are not cache storage.
@@ -18,4 +18,5 @@ self.addEventListener('fetch',event=>{
   return fetch(event.request);
  })());
 });
+
 

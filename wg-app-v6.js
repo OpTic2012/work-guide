@@ -1,6 +1,7 @@
 /* Work Guide v6 — approved UI, mounted only after the original WGL2 unlock. */
 (async function(){
 'use strict';
+const WG_APP_VERSION='6.1';
 const iconMap={briefcase:'briefcase-business',book:'book-open',shield:'shield-check',check:'square-check',users:'users',help:'circle-help',tools:'wrench',megaphone:'megaphone',clipboard:'file-text',chevron:'chevron-right',left:'chevron-left',plus:'plus',search:'search',bell:'bell',home:'house',star:'star',user:'user',edit:'pencil',trash:'trash-2',upload:'upload',download:'download',save:'save',arrowUp:'chevron-up',arrowDown:'chevron-down',lock:'lock-keyhole',signal:'signal',wifi:'wifi'};
 const icons=iconMap;
 function ico(name,cl=''){return `<i data-lucide="${iconMap[name]||'file-text'}" class="svg ${cl}" aria-hidden="true"></i>`}
@@ -135,7 +136,7 @@ function favoritesPhone(){
 }
 function profilePhone(){
  const existing=prepareLegacy('profile')&&legacy.main.querySelector('.screenContent');
- return frame(header('Προφίλ')+`<div class="page-body phone-form"><div class="wg-profile-avatar">${ico('user','xl')}</div><h4 class="wg-profile-title">${esc(config.profile.name||'Το προφίλ μου')}</h4><label>Όνομα<input class="field" data-profile-name value="${esc(config.profile.name)}" autocomplete="off" placeholder="Το όνομά σου"></label><button class="wg-button primary full" data-profile-action="save">Αποθήκευση</button><div class="divider"></div><button class="wg-button full" data-profile-action="lock">${ico('lock','sm')} Κλείδωμα αυτής της συσκευής</button><div class="wg-profile-tools"><button class="wg-button full" data-profile-action="backup">Αντίγραφο ασφαλείας</button><button class="wg-button full" data-profile-action="restore">Επαναφορά αντιγράφου</button><button class="wg-button full" data-profile-action="appearance">Εισαγωγή εμφάνισης JSON</button><a class="wg-button full" href="./designer.html" target="_blank" rel="noopener">Άνοιγμα Designer</a>${existing?'<details><summary>Πρόσθετες ρυθμίσεις</summary>'+legacyHostMarkup('profile')+'</details>':''}</div></div>`,'profile');
+ return frame(header('Προφίλ')+`<div class="page-body phone-form"><div class="wg-profile-avatar">${ico('user','xl')}</div><h4 class="wg-profile-title">${esc(config.profile.name||'Το προφίλ μου')}</h4><p class="wg-profile-version" style="text-align:center;margin:-14px 0 24px;font-size:13px;line-height:1.4;color:#695d7a">Έκδοση ${WG_APP_VERSION}</p><label>Όνομα<input class="field" data-profile-name value="${esc(config.profile.name)}" autocomplete="off" placeholder="Το όνομά σου"></label><button class="wg-button primary full" data-profile-action="save">Αποθήκευση</button><div class="divider"></div><button class="wg-button full" data-profile-action="lock">${ico('lock','sm')} Κλείδωμα αυτής της συσκευής</button><div class="wg-profile-tools"><button class="wg-button full" data-profile-action="backup">Αντίγραφο ασφαλείας</button><button class="wg-button full" data-profile-action="restore">Επαναφορά αντιγράφου</button><button class="wg-button full" data-profile-action="appearance">Εισαγωγή εμφάνισης JSON</button><a class="wg-button full" href="./designer.html" target="_blank" rel="noopener">Άνοιγμα Designer</a>${existing?'<details><summary>Πρόσθετες ρυθμίσεις</summary>'+legacyHostMarkup('profile')+'</details>':''}</div></div>`,'profile');
 }
 function sectionPhone(){return frame(header(config.cards[selectedCard]?.title||'Work Guide')+'<div class="page-body"><p class="empty-note">Δεν βρέθηκε το περιεχόμενο αυτής της ενότητας.</p></div>','section')}
 function renderApp(){
@@ -225,4 +226,5 @@ try{
 }
 
 })();
+
 
