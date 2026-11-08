@@ -72,10 +72,10 @@ function openApp(html,key){
  // The old edition forcibly locked on backgrounding. Remove only that obsolete behavior.
  html=html.replace(/<style id="wg-relock-style">[\s\S]*?<\/script>/,'');
  // Load the original procedure editor and the updated visual layer AFTER decrypting.
- const extras='<link rel="stylesheet" href="./wg-theme-v6.2.css">'+
+ const extras='<link rel="stylesheet" href="./wg-theme-v6.3.css">'+
  '<script src="./lucide.min.js?v=6"><'+'/script>'+
  '<script src="./wg-secure-store.js?v=6"><'+'/script>'+
- '<script src="./wg-app-v6.2.js"><'+'/script>';
+ '<script src="./wg-app-v6.3.js"><'+'/script>';
  const composed=html.replace(/<\/body>/i,extras+'</body>');
  window.__wgProcedureKey=key;
  pwd.value='';
@@ -114,6 +114,7 @@ if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostnam
 }
 })();
 </script></body></html>
+
 
 
 
