@@ -227,3 +227,36 @@ body.wg-v6-mounted>#wg-designer.wg-production{font-family:-apple-system,BlinkMac
 #wg-designer.wg-production .wg-backup-note{font-size:13px;color:#6a587b;line-height:1.5;margin:5px 0}
 @media(min-width:600px){body.wg-v6-mounted>#wg-designer.wg-production{max-width:500px;left:50%;right:auto;width:100%;transform:translateX(-50%);box-shadow:0 0 35px #24113025}}
 @media(max-width:355px){#wg-designer.wg-production .hero-app-title{font-size:23px}#wg-designer.wg-production .hero-app-subtitle{font-size:15px}#wg-designer.wg-production .home-card-title{font-size:17px}#wg-designer.wg-production .hero-welcome{font-size:25px}}
+
+
+/* Work Guide 6.1: anchor the tab bar to the viewport, with one iOS bottom inset. */
+body.wg-v6-mounted > #wg-designer.wg-production{
+ height:100%;height:100dvh;max-height:100dvh;bottom:auto;
+}
+#wg-designer.wg-production .phone-screen{
+ --wg-safe-bottom:env(safe-area-inset-bottom,0px);
+ --wg-nav-height:calc(58px + var(--wg-safe-bottom));
+}
+#wg-designer.wg-production .phone-screen::after{display:none}
+#wg-designer.wg-production .phone-scroll{
+ position:absolute;top:0;right:0;bottom:var(--wg-nav-height);left:0;
+ width:auto;height:auto;max-height:none;flex:none;margin:0;
+ overflow-x:hidden;overflow-y:auto;
+}
+#wg-designer.wg-production .wg-nav-slot{
+ position:absolute;right:0;bottom:0;left:0;z-index:2;
+ height:var(--wg-nav-height);min-height:0;max-height:var(--wg-nav-height);
+ margin:0;padding:0;flex:none;box-sizing:border-box;overflow:hidden;
+ background:#fff;
+}
+#wg-designer.wg-production .wg-nav-slot > .wg-app-nav{
+ position:static;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ width:100%;height:100%;min-height:0;max-height:none;margin:0;
+ box-sizing:border-box;padding:5px 10px var(--wg-safe-bottom);
+ align-items:start;border-top:1px solid #e8e1ef;
+}
+#wg-designer.wg-production .wg-nav-slot .wg-app-tab{
+ height:52px;min-height:0;margin:0;padding:4px 5px;
+ box-sizing:border-box;justify-content:center;
+}
+#wg-designer.wg-production .toast{bottom:calc(70px + env(safe-area-inset-bottom,0px))}

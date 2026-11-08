@@ -69,7 +69,7 @@ const root=document.createElement('div');root.id='wg-designer';root.className='w
 root.innerHTML='<div id="stage"></div><div class="toast" id="toast" role="status" aria-live="polite"></div><input id="appearance-file" type="file" accept=".json,application/json" hidden><input id="backup-file" type="file" accept=".json,application/json" hidden>';
 const $=selector=>root.querySelector(selector);
 function showToast(message){const el=$('#toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>el.classList.remove('show'),3800)}
-function frame(contents,screen){return `<div class="phone-screen" data-view="${screen}" style="${viewVars()}"><div class="phone-scroll" ${pendingDelete||pendingLock||pendingRestore?'inert':''}>${contents}</div><div ${pendingDelete||pendingLock||pendingRestore?'inert':''}>${navBar(screen)}</div>${confirmationDialog()}</div>`}
+function frame(contents,screen){return `<div class="phone-screen" data-view="${screen}" style="${viewVars()}"><div class="phone-scroll" ${pendingDelete||pendingLock||pendingRestore?'inert':''}>${contents}</div><div class="wg-nav-slot" ${pendingDelete||pendingLock||pendingRestore?'inert':''}>${navBar(screen)}</div>${confirmationDialog()}</div>`}
 function newRecordId(){if(typeof crypto.randomUUID==='function')return crypto.randomUUID();return 'wg-'+Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join('')}
 function appearanceOnly(value){const {procedures,policies,contacts,favoriteRefs,profile,...appearance}=value;return appearance}
 function download(name,value){const blob=new Blob([JSON.stringify(value,null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)}
@@ -225,3 +225,4 @@ try{
 }
 
 })();
+
